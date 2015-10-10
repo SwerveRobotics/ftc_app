@@ -44,8 +44,8 @@ public class PositionLocation extends SynchronousOpMode
     float correctedaZ;
     boolean firstRun;
 
-    final double GRAPH_H_VALUE;
-    final double GRAPH_K_VALUE;
+    double GRAPH_H_VALUE;
+    double GRAPH_K_VALUE;
 
     DcMotor motorFrontLeft;
     DcMotor motorFrontRight;
@@ -128,10 +128,22 @@ public class PositionLocation extends SynchronousOpMode
             }
             if(updateGamepads())
             {
-                motorFrontLeft.setPower(MotorControl());
-                motorFrontRight.setPower(-MotorControl());
-                motorRearLeft.setPower(MotorControl());
-                motorRearRight.setPower(-MotorControl());
+                if(gamepad1.right_bumper)
+                {
+                    GRAPH_H_VALUE += 0.05;
+                    GRAPH_K_VALUE = Math.log((2*GRAPH_H_VALUE/(2+GRAPH_H_VALUE))-1);
+                }
+                if(gamepad1.left_bumper)
+                {
+                    GRAPH_H_VALUE -= 0.05;
+                    GRAPH_K_VALUE = Math.log((2*GRAPH_H_VALUE/(2+GRAPH_H_VALUE))-1);
+                }
+
+                double speed = MotorControlTrial();
+                motorFrontLeft.setPower(speed);
+                motorFrontRight.setPower(-speed);
+                motorRearLeft.setPower(speed);
+                motorRearRight.setPower(-speed);
             }
             telemetry.update();
             idle();
@@ -146,12 +158,19 @@ public class PositionLocation extends SynchronousOpMode
             return (GRAPH_H_VALUE/(2+exponentTerm))-(GRAPH_H_VALUE/4)+(1/2);
         }
         else{
-            double exponentTerm = 2*Math.exp(GRAPH_K_VALUE*((2*GRAPH_X_VALUE)+1));
-            return (GRAPH_H_VALUE/(2+exponentTerm))-(GRAPH_H_VALUE/4)-(1/2);
+            if(GRAPH_X_VALUE == 0){
+                return 0;
+            }
+            else {
+                double exponentTerm = 2 * Math.exp(GRAPH_K_VALUE * ((2 * GRAPH_X_VALUE) + 1));
+                return (GRAPH_H_VALUE/(2+exponentTerm)) - (GRAPH_H_VALUE/4) - (1/2);
+            }
         }
-
     }
-
+    double MotorControlTrial(){
+        double exponentTerm = 2*Math.exp(GRAPH_K_VALUE*((2*gamepad1.left_stick_y)-Math.signum(gamepad1.left_stick_y)));
+        return (GRAPH_H_VALUE/(2+exponentTerm))-(GRAPH_H_VALUE/4)+(Math.signum(gamepad1.left_stick_y)/2);
+    }
     //----------------------------------------------------------------------------------------------
     // dashboard configuration
     //----------------------------------------------------------------------------------------------
@@ -162,50 +181,45 @@ public class PositionLocation extends SynchronousOpMode
 
         // At the beginning of each telemetry update, grab a bunch of data
         // from the IMU that we will then display in separate lines.
-        telemetry.addAction(new IAction() { @Override public void doAction()
-        {
-            // Acquiring the angles is relatively expensive; we don't want
-            // to do that in each of the three items that need that info, as that's
-            // three times the necessary expense.
-            angles     = imu.getAngularOrientation();
-            position   = imu.getPosition();
-            acceleration = imu.getLinearAcceleration();
+        telemetry.addAction(new IAction() {
+            @Override
+            public void doAction() {
+                // Acquiring the angles is relatively expensive; we don't want
+                // to do that in each of the three items that need that info, as that's
+                // three times the necessary expense.
+                angles = imu.getAngularOrientation();
+                position = imu.getPosition();
+                acceleration = imu.getLinearAcceleration();
 
-            // The rest of this is pretty cheap to acquire, but we may as well do it
-            // all while we're gathering the above.
-            loopCycles = getLoopCount();
-            i2cCycles  = ((II2cDeviceClientUser) imu).getI2cDeviceClient().getI2cCycleCount();
-            ms         = elapsed.time() * 1000.0;
-            prevXvel += timeInterval*correctedaX;
-            prevYvel += timeInterval*correctedaY;
-            prevZvel += timeInterval*correctedaZ;
-            totalXdisplacement += prevXvel*timeInterval + (correctedaX*Math.pow(timeInterval,2))/2;
-            totalYdisplacement += prevYvel*timeInterval + (correctedaY*Math.pow(timeInterval,2))/2;
-            totalZdisplacement += prevZvel*timeInterval + (correctedaZ*Math.pow(timeInterval,2))/2;
-            if(Math.abs(acceleration.accelX) < 0.1 || (loopCycles < 1000)){
-                correctedaX = 0;
-            }
-            else{
-                correctedaX =(float) acceleration.accelX;
-            }
+                // The rest of this is pretty cheap to acquire, but we may as well do it
+                // all while we're gathering the above.
+                loopCycles = getLoopCount();
+                i2cCycles = ((II2cDeviceClientUser) imu).getI2cDeviceClient().getI2cCycleCount();
+                ms = elapsed.time() * 1000.0;
+                prevXvel += timeInterval * correctedaX;
+                prevYvel += timeInterval * correctedaY;
+                prevZvel += timeInterval * correctedaZ;
+                totalXdisplacement += prevXvel * timeInterval + (correctedaX * Math.pow(timeInterval, 2)) / 2;
+                totalYdisplacement += prevYvel * timeInterval + (correctedaY * Math.pow(timeInterval, 2)) / 2;
+                totalZdisplacement += prevZvel * timeInterval + (correctedaZ * Math.pow(timeInterval, 2)) / 2;
+                if (Math.abs(acceleration.accelX) < 0.1 || (loopCycles < 1000)) {
+                    correctedaX = 0;
+                } else {
+                    correctedaX = (float) acceleration.accelX;
+                }
 
-            if(Math.abs(acceleration.accelY) < 0.1 || loopCycles < 1000)
-            {
-                correctedaY = 0;
-            }
-            else
-            {
-                correctedaY =(float) acceleration.accelY;
-            }
+                if (Math.abs(acceleration.accelY) < 0.1 || loopCycles < 1000) {
+                    correctedaY = 0;
+                } else {
+                    correctedaY = (float) acceleration.accelY;
+                }
 
-            if(Math.abs(acceleration.accelZ) < 0.1 || loopCycles < 1000) {
-                correctedaZ = 0;
+                if (Math.abs(acceleration.accelZ) < 0.1 || loopCycles < 1000) {
+                    correctedaZ = 0;
+                } else {
+                    correctedaZ = (float) acceleration.accelZ;
+                }
             }
-            else
-            {
-                correctedaZ =(float) acceleration.accelZ;
-            }
-        }
         });
         telemetry.addLine(
                 telemetry.item("loop count: ", new IFunc<Object>() {
@@ -324,7 +338,12 @@ public class PositionLocation extends SynchronousOpMode
                             public Object value() {
                                 return motorFrontLeft.getPower();
                             }
-                        }));
+                        }),
+                telemetry.item("H Value", new IFunc<Object>() {
+                            public Object value() {
+                                return GRAPH_H_VALUE;
+                            }
+                }));
 
     }
 
