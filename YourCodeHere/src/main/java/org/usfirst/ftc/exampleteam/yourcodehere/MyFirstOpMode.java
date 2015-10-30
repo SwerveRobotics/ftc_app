@@ -10,6 +10,7 @@ import org.swerverobotics.library.interfaces.*;
  * Java package.
  */
 @TeleOp(name="My First OpMode")
+@Disabled
 public class MyFirstOpMode extends SynchronousOpMode
     {
     /* Declare here any fields you might find useful. */
