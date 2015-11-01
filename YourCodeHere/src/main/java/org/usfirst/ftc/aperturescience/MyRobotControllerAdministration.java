@@ -1,11 +1,11 @@
-package org.usfirst.ftc.exampleteam.yourcodehere;
+package org.usfirst.ftc.aperturescience;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 
 import org.swerverobotics.library.SwerveUtil;
 import org.swerverobotics.library.interfaces.*;
 import org.swerverobotics.library.examples.*;
+
 import com.qualcomm.ftcrobotcontroller.opmodes.*;
 
 /**

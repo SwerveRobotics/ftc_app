@@ -1,6 +1,5 @@
-package org.usfirst.ftc.exampleteam.yourcodehere;
+package org.usfirst.ftc.aperturescience;
 
-import com.qualcomm.robotcore.hardware.*;
 import org.swerverobotics.library.*;
 import org.swerverobotics.library.interfaces.*;
 
