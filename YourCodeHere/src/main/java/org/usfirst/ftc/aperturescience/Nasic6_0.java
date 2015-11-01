@@ -2,6 +2,7 @@ package org.usfirst.ftc.aperturescience;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -31,9 +32,13 @@ public class Nasic6_0 extends OpMode {
         motorR = hardwareMap.dcMotor.get("motorR");
         motorL = hardwareMap.dcMotor.get("motorL");
         motorL.setDirection(DcMotor.Direction.REVERSE);
+
+        motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorR.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
         sweeper = hardwareMap.dcMotor.get("sweeper");
         /*
-        arm = hardwareMap.dcMotor.get("arm");
+        arm = hardwareMap.dcMotor.get("elbow");
         wrist = hardwareMap.servo.get("wrist");
         */
 
@@ -44,21 +49,24 @@ public class Nasic6_0 extends OpMode {
     public void loop() {
 
         double speedMult = .5;
-        float throttle = -gamepad2.left_stick_y;
-        float direction = gamepad2.right_stick_x;
+        float throttle = -gamepad1.left_stick_y;
+        float direction = gamepad1.right_stick_x;
         float right = throttle - direction;
         float left = throttle + direction;
-        if(gamepad2.right_bumper == true) speedMult = 1;
 
-        if(right > -.05 && right < .05 && left > -.05 && left < .05)
+        /*
+        if(gamepad2.right_bumper == true)   speedMult = 1;
+
+        if(right > -.1 && right < .1 && left > -.1 && left < .1)
         {
-            throttle = -gamepad1.left_stick_y;
-            direction = -gamepad1.left_stick_y;
-            right = throttle - direction;
-            left = throttle + direction;
+            throttle = gamepad1.left_stick_y;
+            direction = -gamepad1.right_stick_x;
+            right = throttle + direction;
+            left = throttle - direction;
             if(gamepad1.right_bumper == true) speedMult = 1;
             else speedMult = .5;
         }
+        */
 
         right = Range.clip(right, -1, 1);
         left = Range.clip(left, -1, 1);
@@ -70,6 +78,7 @@ public class Nasic6_0 extends OpMode {
 
         //wrist.setPosition(wristPosition);
 
+
         if (gamepad1.a) {
             sweeper.setPower(0.5);
         }
@@ -79,6 +88,7 @@ public class Nasic6_0 extends OpMode {
         if (gamepad1.y) {
             sweeper.setPower(-0.5);
         }
+
 
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr", "left  pwr: "
