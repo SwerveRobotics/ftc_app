@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
 import org.swerverobotics.library.SynchronousOpMode;
-import org.swerverobotics.library.interfaces.TeleOp;
 
 /**
- * Created by crowcasso on 10/14/15.
+ * Created by Aperture Science on 10/14/15.
  */
 
 @org.swerverobotics.library.interfaces.Autonomous
@@ -91,7 +90,6 @@ public class Autonomous extends SynchronousOpMode {
 
     }
     public int degreesToRotations(double dgr){
-
         return 800;
     }
 }
