@@ -55,8 +55,8 @@ public class MyRobotControllerAdministration
 
         manager.register(SynchTeleOp.class);
         manager.register(SynchTelemetryOp.class);
-        manager.register(LinearAutonomousPolygon.class);
-        manager.register("FTC HQ NxtTeleOp", NxtTeleOp.class);
+        //manager.register(LinearAutonomousPolygon.class);
+       // manager.register("FTC HQ NxtTeleOp", NxtTeleOp.class);
         }
 
     /**
