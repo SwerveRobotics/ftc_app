@@ -46,10 +46,10 @@ public class MyTutorialAuto extends SynchronousOpMode
         // Go go gadget robot!
         DriveForwardTime(DRIVE_POWER, 4000);
         TurnLeft(DRIVE_POWER);
-       // wait(500);
+        wait(500);
         DriveForwardTime(DRIVE_POWER, 4000);
         TurnRight(DRIVE_POWER);
-       // wait(500);
+        wait(500);
         RaiseArm();
         DriveForwardTime(DRIVE_POWER, 4000);
         StopDriving();
