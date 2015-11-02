@@ -108,6 +108,7 @@ public class MyTutorialAuto2 extends SynchronousOpMode
         armServo.setPosition(.2);
     }
 
+    /* this Delay method is no longer needed for above code. Will leave in for possible future use */
     private void Delay(long msToDelay) {
         // Protect from silly programming errors
         if (msToDelay > 0) {
