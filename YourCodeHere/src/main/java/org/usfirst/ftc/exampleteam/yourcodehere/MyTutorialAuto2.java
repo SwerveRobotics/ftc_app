@@ -6,16 +6,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
-import org.swerverobotics.library.interfaces.Disabled;
-import org.swerverobotics.library.interfaces.TeleOp;
+import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 /**
  * Autonomous program made for the "Basic Autonomous" video
+ *
+ * Changed wait() methods to Thread.sleep()
+ *
+ * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyTutorialAuto")
+@Autonomous(name="MyTutorialAuto2")
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class MyTutorialAuto extends SynchronousOpMode
+public class MyTutorialAuto2 extends SynchronousOpMode
 {
     // Declare motors
     DcMotor motorLeft = null;
@@ -47,10 +50,14 @@ public class MyTutorialAuto extends SynchronousOpMode
         // Autonomous Code here://
         DriveForwardTime(DRIVE_POWER, 4000);
         TurnLeft(DRIVE_POWER);
-        wait(500);
+        Delay(500);
+        StopDrivingTime(2000);
+
         DriveForwardTime(DRIVE_POWER, 4000);
         TurnRight(DRIVE_POWER);
-        wait(500);
+        Delay(2000);
+        StopDrivingTime(2000);
+
         RaiseArm();
         DriveForwardTime(DRIVE_POWER, 4000);
         StopDriving();
@@ -70,12 +77,16 @@ public class MyTutorialAuto extends SynchronousOpMode
     public void DriveForwardTime(double power, long time) throws InterruptedException
     {
         DriveForward(power);
-        wait(time);
+        Thread.sleep(time);
     }
 
     public void StopDriving()
     {
         DriveForward(0);
+    }
+
+    public void StopDrivingTime(long time) throws InterruptedException {
+        DriveForwardTime(0, time);
     }
 
     public void TurnLeft(double power)
@@ -97,6 +108,16 @@ public class MyTutorialAuto extends SynchronousOpMode
     public void LowerArm()
     {
         armServo.setPosition(.2);
+    }
+
+    private void Delay(long msToDelay) {
+        // Protect from silly programming errors
+        if (msToDelay > 0) {
+            try {
+                Thread.sleep(msToDelay);
+            } catch (InterruptedException ignored) {
+            }
+        }
     }
 
 }//<MyTutorialAuto

@@ -15,6 +15,7 @@ public class MyFirstOpMode extends SynchronousOpMode
     /* Declare here any fields you might find useful. */
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
+    DcMotor motor3 = null;
 
     Servo servoArm = null;
         //default arm position variable
@@ -29,6 +30,9 @@ public class MyFirstOpMode extends SynchronousOpMode
          */
             this.motorLeft = this.hardwareMap.dcMotor.get("motorLeft");
             this.motorRight = this.hardwareMap.dcMotor.get("motorRight");
+            //legacy motor
+            this.motor3 = this.hardwareMap.dcMotor.get("motor3");
+
 
             //set motor channel to run without encoders
             motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -43,7 +47,7 @@ public class MyFirstOpMode extends SynchronousOpMode
         // Wait for the game to start
         waitForStart();
 
-        // Go go gadget robot!
+        // telOp Code below...
         while (opModeIsActive())
             {
             if (updateGamepads())
@@ -51,6 +55,9 @@ public class MyFirstOpMode extends SynchronousOpMode
                 // tank drive
                 motorLeft.setPower(gamepad1.left_stick_y);
                 motorRight.setPower(gamepad1.right_stick_y);
+
+                    // legacy motor connection
+                motor3.setPower(gamepad1.right_trigger);
 
                 //servo commands
                 if(gamepad1.a)
