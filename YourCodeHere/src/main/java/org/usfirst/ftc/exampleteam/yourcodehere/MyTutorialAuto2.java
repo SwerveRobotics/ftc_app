@@ -49,13 +49,11 @@ public class MyTutorialAuto2 extends SynchronousOpMode
 
         // Autonomous Code here://
         DriveForwardTime(DRIVE_POWER, 4000);
-        TurnLeft(DRIVE_POWER);
-        Delay(500);
+        TurnLeft(DRIVE_POWER, 500);
         StopDrivingTime(2000);
 
         DriveForwardTime(DRIVE_POWER, 4000);
-        TurnRight(DRIVE_POWER);
-        Delay(2000);
+        TurnRight(DRIVE_POWER, 500);
         StopDrivingTime(2000);
 
         RaiseArm();
@@ -65,6 +63,7 @@ public class MyTutorialAuto2 extends SynchronousOpMode
     }//Main
 
 // Below: Additional Methods to clean up Main code...
+// added time to both turn methods, just like for DriveForwardTime
 
     double DRIVE_POWER = 1.0;
 
@@ -89,15 +88,14 @@ public class MyTutorialAuto2 extends SynchronousOpMode
         DriveForwardTime(0, time);
     }
 
-    public void TurnLeft(double power)
-    {
+    public void TurnLeft(double power, long time) throws InterruptedException {
         motorLeft.setPower(-power);
         motorRight.setPower(power);
+        Thread.sleep(time);
     }
 
-    public void TurnRight(double power)
-    {
-        TurnLeft(-power);
+    public void TurnRight(double power, long time) throws InterruptedException {
+        TurnLeft(-power, time);
     }
 
     public void RaiseArm()
