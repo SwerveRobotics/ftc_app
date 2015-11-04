@@ -3,6 +3,7 @@ package org.usfirst.ftc.exampleteam.yourcodehere;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
@@ -20,6 +21,14 @@ public class BlueBeaconClimber extends SynchronousOpMode
     DcMotor motorRight = null;
     DcMotor motorCollector = null;
     DcMotor motorScorer = null;
+    //Servo servoClimberDump = null;
+
+    double DRIVE_POWER = 1.0;
+    double CLIMBER_DUMP_POSITION = 0.8;
+    double CLIMBER_RETURN_POSITION = 0.2;
+
+    // TODO Change this
+    int FOO = 1;
 
     @Override public void main() throws InterruptedException
     {
@@ -28,6 +37,7 @@ public class BlueBeaconClimber extends SynchronousOpMode
         motorRight = hardwareMap.dcMotor.get("motorRight");
         motorCollector = hardwareMap.dcMotor.get("motorCollector");
         motorScorer = hardwareMap.dcMotor.get("motorScorer");
+        //servoClimberDump = hardwareMap.servo.get("servoClimberDump");
 
         // Set motor channel modes
         motorLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -49,6 +59,14 @@ public class BlueBeaconClimber extends SynchronousOpMode
          * press correct button
          * dump climbers
          */
+
+        DriveForwardDistance(DRIVE_POWER, FOO);
+        TurnRightDistance(DRIVE_POWER, FOO);
+        FollowLine();
+        StopDriving();
+        PressBeaconButton();
+        DumpClimbers();
+
     }
 
     public void DriveForward(double power)
@@ -96,5 +114,22 @@ public class BlueBeaconClimber extends SynchronousOpMode
     public void TurnRightDistance(double power, int distance)
     {
         TurnLeftDistance(-power, distance);
+    }
+
+    public void DumpClimbers() throws InterruptedException
+    {
+        //servoClimberDump.setPosition(CLIMBER_DUMP_POSITION);
+        wait(1000);
+        //servoClimberDump.setPosition(CLIMBER_RETURN_POSITION);
+    }
+
+    public void PressBeaconButton()
+    {
+
+    }
+
+    public void FollowLine()
+    {
+
     }
 }
