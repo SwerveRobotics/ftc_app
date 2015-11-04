@@ -1,6 +1,5 @@
 package org.swerverobotics.library.internal;
 
-import android.util.*;
 import com.qualcomm.robotcore.util.*;
 import org.swerverobotics.library.*;
 import org.swerverobotics.library.exceptions.*;
@@ -34,14 +33,12 @@ public class Util
         return result.toString();
         }
 
-    //----------------------------------------------------------------------------------------------
-    // Threading
-    //----------------------------------------------------------------------------------------------
-
-    static public void handleCapturedInterrupt(Exception e)
+    public static byte[] concatenateByteArrays(byte[] left, byte[] right)
         {
-        // Log.d(SynchronousOpMode.TAG, "caught an thread interrupt, reinterrupting: " + e);
-        Thread.currentThread().interrupt();
+        byte[] result = new byte[left.length + right.length];
+        System.arraycopy(left,  0, result, 0,           left.length);
+        System.arraycopy(right, 0, result, left.length, right.length);
+        return result;
         }
 
     //----------------------------------------------------------------------------------------------
@@ -174,7 +171,7 @@ public class Util
             }
         }
     
-    static public Field getAccessibleClassNonStaticField(Object target, int iField)
+    static public Field getAccessibleClassNonStaticFieldIncludingSuper(Object target, int iField)
         {
         Class<?> c = target.getClass();
         List<Field> fields = getDeclaredNonStaticFieldsIncludingSuper(c, true);
@@ -186,13 +183,25 @@ public class Util
         return field;        
         }
 
+    static public Field getLocalAccessibleClassNonStaticField(Object target, int iField)
+        {
+        Class<?> c = target.getClass();
+        List<Field> fields = getLocalDeclaredNonStaticFields(c, true);
+        Field field = fields.get(iField);
+
+        if (!field.isAccessible())
+            field.setAccessible(true);
+
+        return field;
+        }
+
     //----------------------------------------------------------------------------------------------
     // Private field access
     //----------------------------------------------------------------------------------------------
 
     static public int getPrivateIntField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         return getPrivateIntField(target, field);
         }
 
@@ -210,7 +219,7 @@ public class Util
 
     static public long getPrivateLongField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getLong(target);
@@ -223,7 +232,7 @@ public class Util
 
     static public short getPrivateShortField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getShort(target);
@@ -236,7 +245,7 @@ public class Util
 
     static public double getPrivateDoubleField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getDouble(target);
@@ -249,7 +258,7 @@ public class Util
 
     static public float getPrivateFloatField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getFloat(target);
@@ -261,7 +270,7 @@ public class Util
         }
     static public boolean getPrivateBooleanField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getBoolean(target);
@@ -274,7 +283,7 @@ public class Util
 
     static public byte getPrivateByteField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             return field.getByte(target);
@@ -288,7 +297,13 @@ public class Util
     // @SuppressWarnings("unchecked")
     static public <T> T getPrivateObjectField(Object target, int iField)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
+        return Util.<T>getPrivateObjectField(target, field);
+        }
+
+    static public <T> T getLocalPrivateObjectField(Object target, int iField)
+        {
+        Field field = getLocalAccessibleClassNonStaticField(target, iField);
         return Util.<T>getPrivateObjectField(target, field);
         }
 
@@ -306,7 +321,7 @@ public class Util
 
     static public <T> void setPrivateObjectField(Object target, int iField, T value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try 
             {
             field.set(target, value);
@@ -319,7 +334,7 @@ public class Util
 
     static public void setPrivateLongField(Object target, int iField, long value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             field.setLong(target, value);
@@ -332,7 +347,7 @@ public class Util
 
     static public void setPrivateIntField(Object target, int iField, int value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             field.setInt(target, value);
@@ -345,7 +360,7 @@ public class Util
 
     static public void setPrivateByteField(Object target, int iField, byte value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             field.setByte(target, value);
@@ -358,7 +373,7 @@ public class Util
 
     static public void setPrivateFloatField(Object target, int iField, float value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             field.setFloat(target, value);
@@ -371,7 +386,7 @@ public class Util
 
     static public void setPrivateDoubleField(Object target, int iField, double value)
         {
-        Field field = getAccessibleClassNonStaticField(target, iField);
+        Field field = getAccessibleClassNonStaticFieldIncludingSuper(target, iField);
         try
             {
             field.setDouble(target, value);
@@ -380,5 +395,31 @@ public class Util
             {
             throw SwerveRuntimeException.wrap(e);
             }
+        }
+
+    //----------------------------------------------------------------------------------------------
+    // Dealing with captured exceptions
+    //
+    // That InterruptedException is a non-runtime exception is, I believe, a bug: I could go
+    // on at great length here about that, but for the moment will refrain and defer until another
+    // time: the issue is a lengthy discussion.
+    //
+    // But we have the issue of what to do. That the fellow has captured the interrupt means that
+    // he doesn't want an InterruptedException to propagate. Yet somehow we must in effect do so:
+    // the thread needs to be torn down. Ergo, we seem to have no choice but to throw a runtime
+    // version of the interrupt.
+    //----------------------------------------------------------------------------------------------
+
+    public static void handleCapturedInterrupt(InterruptedException e)
+        {
+        handleCapturedException((Exception)e);
+        }
+
+    public static void handleCapturedException(Exception e)
+        {
+        if (e instanceof InterruptedException || e instanceof RuntimeInterruptedException);
+            Thread.currentThread().interrupt();
+
+        throw SwerveRuntimeException.wrap(e);
         }
     }
