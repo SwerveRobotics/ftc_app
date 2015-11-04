@@ -9,9 +9,11 @@ import org.swerverobotics.library.interfaces.*;
  * to suit your needs, or create sibling OpModes adjacent to this one in the same
  * Java package.
  */
-@TeleOp(name="MyFirstTeleOp")
-public class MyFirstOpMode extends SynchronousOpMode
-    {
+@TeleOp(name="MyBasicTeleOp") //name to appear in Driver Station OpMode selection
+//@Disabled  //if you un-comment this, it will keep from showing on DriverStation
+
+public class BasicTeleOp extends SynchronousOpMode
+{
     /* Declare here any fields you might find useful. */
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
@@ -75,5 +77,5 @@ public class MyFirstOpMode extends SynchronousOpMode
             idle();
             }//while opModeActive
 
-        }//main
-    }//MyFirstOpMode
+    }//main
+}//MyFirstOpMode

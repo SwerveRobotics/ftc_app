@@ -15,10 +15,10 @@ import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
  *
  * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyTutorialAuto2")
+@Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class MyTutorialAuto2 extends SynchronousOpMode
+public class BasicAutonomous extends SynchronousOpMode
 {
     // Declare motors
     DcMotor motorLeft = null;

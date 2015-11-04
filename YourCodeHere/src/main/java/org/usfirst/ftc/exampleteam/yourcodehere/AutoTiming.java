@@ -46,6 +46,8 @@ public class AutoTiming extends LinearOpMode {
         rightMotor = hardwareMap.dcMotor.get("motorRight");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
+        //ClassFactory is required to set up use of Encoders for legacy motorsControllers
+        //not needed in this code example, but ok to include for future changes
         ClassFactory.createEasyLegacyMotorController(
                 this, leftMotor, rightMotor);
 
