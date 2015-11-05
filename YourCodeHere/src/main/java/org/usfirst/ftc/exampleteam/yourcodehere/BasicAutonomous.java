@@ -20,7 +20,9 @@ import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 public class BasicAutonomous extends SynchronousOpMode
 {
-    // Declare motors
+    /* Declare variable for all components to be used. Note initial values set to null. */
+
+    //Declare Motors
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
 

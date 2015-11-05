@@ -6,16 +6,17 @@ import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.TeleOp;
 
 /**
- * A skeletal example of a do-nothing first OpMode. Go ahead and change this code
- * to suit your needs, or create sibling OpModes adjacent to this one in the same
- * Java package.
+ * Version one of HHG TeleOp program.
+ * Includes tank drive, arm and extending motors
+ * operates with one game controller, using joystick and combination of trigger & bumpers
+ * to control the two arm motors.
  */
 @TeleOp(name="HHG8271TeleOpMode")
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
 public class HHG8271TeleOp extends SynchronousOpMode
 {
-    // Declare here any fields you might find useful. */
+    // Declare variable for all components to be used. Note initial values set to null. */
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
     DcMotor motorArm = null;
@@ -35,7 +36,7 @@ public class HHG8271TeleOp extends SynchronousOpMode
         // Wait for the game to start
         waitForStart();
 
-        // Go go gadget robot!
+        // Run TeleOp Loop while opModeIsActive. I.e. From once you press Start, until you press Stop on driver station
         while (opModeIsActive())
         {
             if (updateGamepads())
@@ -67,6 +68,6 @@ public class HHG8271TeleOp extends SynchronousOpMode
 
             telemetry.update();
             idle();
-        }//opMOdeActive
+        }//While opMOdeActive
     }//Main
 }//HHG8271TeleOp

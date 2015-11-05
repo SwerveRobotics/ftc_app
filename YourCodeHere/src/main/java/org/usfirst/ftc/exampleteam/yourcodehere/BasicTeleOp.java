@@ -5,16 +5,16 @@ import org.swerverobotics.library.*;
 import org.swerverobotics.library.interfaces.*;
 
 /**
- * A skeletal example of a do-nothing first OpMode. Go ahead and change this code
+ * A skeletal example of a first OpMode. Go ahead and change this code
  * to suit your needs, or create sibling OpModes adjacent to this one in the same
  * Java package.
  */
 @TeleOp(name="MyBasicTeleOp") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class BasicTeleOp extends SynchronousOpMode
+public class BasicTeleOp extends SynchronousOpMode //Special note: this class name must match file name
 {
-    /* Declare here any fields you might find useful. */
+    // Declare variable for all components to be used. Note initial values set to null. */
     DcMotor motorLeft = null;
     DcMotor motorRight = null;
     DcMotor motor3 = null;
