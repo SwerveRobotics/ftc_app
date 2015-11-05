@@ -54,6 +54,8 @@ public class Nasic6_0 extends OpMode {
         float right = throttle - direction;
         float left = throttle + direction;
 
+        if (gamepad1.right_bumper) speedMult = 1;
+
         /*
         if(gamepad2.right_bumper == true)   speedMult = 1;
 
