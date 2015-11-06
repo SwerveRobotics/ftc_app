@@ -7,7 +7,7 @@ import org.swerverobotics.library.interfaces.TeleOp;
 
 /**
  * Version one of HHG TeleOp program.
- * Includes tank drive, arm and extending motors
+ * Includes tank drive, lift arm and extending arm motors
  * operates with one game controller, using joystick and combination of trigger & bumpers
  * to control the two arm motors.
  */
@@ -45,7 +45,7 @@ public class HHG8271TeleOp extends SynchronousOpMode
                 motorLeft.setPower(gamepad1.left_stick_y);
                 motorRight.setPower(gamepad1.right_stick_y);
 
-                //Run Arm and extend drive.  Uses dual button to run negative power
+                //Run LiftArm and extendArm drive.  Uses dual button to run negative power
 
                 if (gamepad1.left_bumper)                       //if Left bumper+trigger, then Negative arm motor power
                 {
