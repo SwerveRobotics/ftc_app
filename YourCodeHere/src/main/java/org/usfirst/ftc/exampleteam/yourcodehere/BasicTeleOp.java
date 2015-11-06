@@ -20,8 +20,9 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
     DcMotor motorRight = null;
     DcMotor motorArm = null;
     //servo
-    Servo servoHand = null;
-    //default arm position variable
+    Servo servoHandR = null;
+    Servo servoHandL = null;
+    //default hand positions variable. To be determined based on your build
     double CLOSED = 0.2;
     double OPEN = 0.8;
 
@@ -42,9 +43,10 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
             //reverse Left motor
             motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
-            this.servoHand = this.hardwareMap.servo.get("Hand");
-            //Preset servoHand position
-            servoHand.setPosition(OPEN);
+            this.servoHandR = this.hardwareMap.servo.get("Hand");
+            //Preset servoHandR position
+            servoHandR.setPosition(OPEN);
+            servoHandL.setPosition(OPEN);
 
         // Wait for the game to start
         waitForStart();
@@ -71,11 +73,13 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
                 //servo commands
                 if(gamepad1.a)
                 {
-                    servoHand.setPosition(OPEN); //button 'a' will open
+                    servoHandR.setPosition(OPEN); //button 'a' will open
+                    servoHandL.setPosition(OPEN);
                 }
                 else if (gamepad1.b)
                 {
-                    servoHand.setPosition(CLOSED);//button 'b' will close
+                    servoHandR.setPosition(CLOSED);//button 'b' will close
+                    servoHandL.setPosition(CLOSED);
                 }
 
                 }//if updateGamepads
