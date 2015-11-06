@@ -43,7 +43,8 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
             //reverse Left motor
             motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
-            this.servoHandR = this.hardwareMap.servo.get("Hand");
+            this.servoHandR = this.hardwareMap.servo.get("HandL");
+            this.servoHandL = this.hardwareMap.servo.get("HandR")
             //Preset servoHandR position
             servoHandR.setPosition(OPEN);
             servoHandL.setPosition(OPEN);
