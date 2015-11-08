@@ -12,8 +12,8 @@ import org.swerverobotics.library.interfaces.TeleOp;
 /**
  * Autonomous program made for the "Basic Autonomous" video
  */
-@Autonomous(name="MyTutorialAuto")
-@Disabled  //if you un-comment this, it will keep from showing on DriverStation
+//@Autonomous(name="MyTutorialAuto")
+//@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
 public class MyTutorialAuto extends SynchronousOpMode
 {

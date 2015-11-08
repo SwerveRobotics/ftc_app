@@ -11,7 +11,7 @@ import org.swerverobotics.library.interfaces.TeleOp;
  * operates with one game controller, using joystick and combination of trigger & bumpers
  * to control the two arm motors.
  */
-@TeleOp(name="HHG8271TeleOpMode")
+//@TeleOp(name="HHG8271TeleOpMode")
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
 public class HHG8271TeleOp extends SynchronousOpMode

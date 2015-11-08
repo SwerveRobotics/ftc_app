@@ -1,26 +1,25 @@
 package org.usfirst.ftc.exampleteam.yourcodehere;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
-import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 /**
- * Linear Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
- * Uses power/time based motor movement to achieve desired distances and turns.
+ * Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
+ * Uses power/time based motor movement to achieve desired distance.
  * Robot configuration include: tank drive motors, 1 servo for arm positioning
  *
  * with these additional features:
  * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
  * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
+@Autonomous(name="MyAutoTouch") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class BasicAutonomous extends SynchronousOpMode
+public class AutoTouch extends SynchronousOpMode
 {
     /* Declare variable for all components to be used. Note initial values set to null. */
 
@@ -30,6 +29,9 @@ public class BasicAutonomous extends SynchronousOpMode
 
     // Declare servos
     Servo armServo = null;
+
+    //Declare Sensors
+    TouchSensor touch = null;
 
     @Override public void main() throws InterruptedException
     {
@@ -45,6 +47,9 @@ public class BasicAutonomous extends SynchronousOpMode
         // Initialize servos
         armServo = hardwareMap.servo.get("servoHandL");
 
+        // Initialize sensors
+        touch = hardwareMap.touchSensor.get("touch");
+
         //  Set arm position for start
         LowerArm();
 
@@ -52,15 +57,15 @@ public class BasicAutonomous extends SynchronousOpMode
         waitForStart();
 
         /************************
-         * Autonomous Code Below://
-         *************************/
-        DriveForwardTime(DRIVE_POWER, 4000);
-        TurnLeft(DRIVE_POWER, 1000);
-        StopDrivingTime(2000);
+        * Autonomous Code Below://
+        *************************/
 
-        DriveForwardTime(DRIVE_POWER, 4000);
-        TurnRight(DRIVE_POWER, 1000);
-        StopDrivingTime(2000);
+        while (!touch.isPressed())  //drive forward until touch is pressed
+        {
+            DriveForward(DRIVE_POWER);
+        }
+
+        StopDrivingTime(2000);  // pause for 2 sec, then proceed with next set of code
 
         RaiseArm();
         DriveForwardTime(DRIVE_POWER, 4000);

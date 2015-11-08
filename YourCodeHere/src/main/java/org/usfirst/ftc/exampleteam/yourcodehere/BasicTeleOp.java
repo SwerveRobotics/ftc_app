@@ -8,6 +8,7 @@ import org.swerverobotics.library.interfaces.*;
  * A Basic example of a first Tele OpMode. Go ahead and change this code
  * to suit your needs, or create a copy to modify.
  * Configuration matches the pushBot build: tank drive, arm motor, 2 servo hands
+ * (my test bed only has one servo.  Be sure to uncomment out second servo
  */
 @TeleOp(name="MyBasicTeleOp") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
@@ -20,7 +21,7 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
     DcMotor motorRight = null;
     DcMotor motorArm = null;
     //servo
-    Servo servoHandR = null;
+    //Servo servoHandR = null;
     Servo servoHandL = null;
     //default hand positions variable. To be determined based on your build
     double CLOSED = 0.2;
@@ -34,25 +35,28 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
          */
             this.motorLeft = this.hardwareMap.dcMotor.get("motorL");
             this.motorRight = this.hardwareMap.dcMotor.get("motorR");
-            this.motorArm = this.hardwareMap.dcMotor.get("Arm");
+            this.motorArm = this.hardwareMap.dcMotor.get("motorArm");
 
             //set motor channel to run without encoders
+            //setChannelMode has been deprecated. Commented out. still works
           //  motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
           //  motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
           //  motorArm.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
             //reverse Left motor
             motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
-            this.servoHandR = this.hardwareMap.servo.get("HandL");
-            this.servoHandL = this.hardwareMap.servo.get("HandR");
+          //  this.servoHandR = this.hardwareMap.servo.get("servoHandR");
+            this.servoHandL = this.hardwareMap.servo.get("servoHandL");
             //Preset servoHandR position
-            servoHandR.setPosition(OPEN);
+           // servoHandR.setPosition(OPEN);
             servoHandL.setPosition(OPEN);
 
         // Wait for the game to start
         waitForStart();
 
-        // telOp Code below...
+            /************************
+             * TeleOp Code Below://
+             *************************/
         while (opModeIsActive())//loop to run while play is active. Until stop button is pressed.
             {
             if (updateGamepads()) //method to read gamepads
@@ -74,12 +78,12 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
                 //servo commands
                 if(gamepad1.a)
                 {
-                    servoHandR.setPosition(OPEN); //button 'a' will open
+                   // servoHandR.setPosition(OPEN); //button 'a' will open
                     servoHandL.setPosition(OPEN);
                 }
                 else if (gamepad1.b)
                 {
-                    servoHandR.setPosition(CLOSED);//button 'b' will close
+                   // servoHandR.setPosition(CLOSED);//button 'b' will close
                     servoHandL.setPosition(CLOSED);
                 }
 

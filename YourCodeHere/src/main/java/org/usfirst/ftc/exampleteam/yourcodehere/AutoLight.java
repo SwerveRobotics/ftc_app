@@ -1,26 +1,27 @@
 package org.usfirst.ftc.exampleteam.yourcodehere;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.LightSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
-import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 /**
- * Linear Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
- * Uses power/time based motor movement to achieve desired distances and turns.
+ * Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
+ * Uses power/time based motor movement to achieve desired distance.
  * Robot configuration include: tank drive motors, 1 servo for arm positioning
  *
  * with these additional features:
  * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
  * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
+@Autonomous(name="MyAutoLight") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class BasicAutonomous extends SynchronousOpMode
+public class AutoLight extends SynchronousOpMode
 {
     /* Declare variable for all components to be used. Note initial values set to null. */
 
@@ -29,7 +30,10 @@ public class BasicAutonomous extends SynchronousOpMode
     DcMotor motorRight = null;
 
     // Declare servos
-    Servo armServo = null;
+  //  Servo armServo = null;
+
+    //Declare Sensors
+    OpticalDistanceSensor distanceSensor;
 
     @Override public void main() throws InterruptedException
     {
@@ -43,29 +47,38 @@ public class BasicAutonomous extends SynchronousOpMode
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // Initialize servos
-        armServo = hardwareMap.servo.get("servoHandL");
+      //  armServo = hardwareMap.servo.get("servoHandL");
+
+        // Initialize sensors
+        distanceSensor = hardwareMap.opticalDistanceSensor.get("ods");
 
         //  Set arm position for start
-        LowerArm();
+      //  LowerArm();
 
         // Wait for the game to start
         waitForStart();
 
         /************************
-         * Autonomous Code Below://
-         *************************/
-        DriveForwardTime(DRIVE_POWER, 4000);
-        TurnLeft(DRIVE_POWER, 1000);
-        StopDrivingTime(2000);
+        * Autonomous Code Below://
+        *************************/
 
-        DriveForwardTime(DRIVE_POWER, 4000);
-        TurnRight(DRIVE_POWER, 1000);
-        StopDrivingTime(2000);
+        while (opModeIsActive()) {
+            //read ods light value
+            double light = distanceSensor.getLightDetectedRaw();
 
-        RaiseArm();
-        DriveForwardTime(DRIVE_POWER, 4000);
-        StopDriving();
+            while (light < 100) {  //drive forward until ods RAW light reads less than 100
 
+                DriveForward(DRIVE_POWER);
+
+            }
+                StopDrivingTime(1000);
+
+                DriveForwardTime(DRIVE_POWER, 4000);
+
+                StopDriving();
+
+
+        }//opModeActive
     }//Main
 
 // Below: Additional Methods to clean up Main code...
@@ -79,8 +92,7 @@ public class BasicAutonomous extends SynchronousOpMode
         motorRight.setPower(power);
     }
 
-    public void DriveForwardTime(double power, long time) throws InterruptedException
-    {
+    public void DriveForwardTime(double power, long time) throws InterruptedException {
         DriveForward(power);
         Thread.sleep(time);
     }
@@ -107,7 +119,7 @@ public class BasicAutonomous extends SynchronousOpMode
         TurnLeft(-power, time);
     }
 
-    public void RaiseArm()
+  /*  public void RaiseArm()
     {
         armServo.setPosition(.8);
     }
@@ -115,7 +127,7 @@ public class BasicAutonomous extends SynchronousOpMode
     public void LowerArm()
     {
         armServo.setPosition(.2);
-    }
+    }*/
 
     /* this Delay method is no longer needed for above code. Will leave in for possible future use */
     private void Delay(long msToDelay)
@@ -130,4 +142,4 @@ public class BasicAutonomous extends SynchronousOpMode
         }
     }
 
-}//<MyTutorialAuto
+}//MyTutorialAuto
