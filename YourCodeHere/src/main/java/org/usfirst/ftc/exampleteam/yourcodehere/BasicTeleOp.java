@@ -5,9 +5,9 @@ import org.swerverobotics.library.*;
 import org.swerverobotics.library.interfaces.*;
 
 /**
- * A skeletal example of a first OpMode. Go ahead and change this code
- * to suit your needs, or create sibling OpModes adjacent to this one in the same
- * Java package.
+ * A Basic example of a first Tele OpMode. Go ahead and change this code
+ * to suit your needs, or create a copy to modify.
+ * Configuration matches the pushBot build: tank drive, arm motor, 2 servo hands
  */
 @TeleOp(name="MyBasicTeleOp") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
@@ -37,14 +37,14 @@ public class BasicTeleOp extends SynchronousOpMode //Special note: this class na
             this.motorArm = this.hardwareMap.dcMotor.get("Arm");
 
             //set motor channel to run without encoders
-            motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-            motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-            motorArm.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+          //  motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+          //  motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+          //  motorArm.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
             //reverse Left motor
             motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
             this.servoHandR = this.hardwareMap.servo.get("HandL");
-            this.servoHandL = this.hardwareMap.servo.get("HandR")
+            this.servoHandL = this.hardwareMap.servo.get("HandR");
             //Preset servoHandR position
             servoHandR.setPosition(OPEN);
             servoHandL.setPosition(OPEN);

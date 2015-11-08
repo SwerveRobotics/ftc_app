@@ -9,10 +9,12 @@ import org.swerverobotics.library.interfaces.Autonomous;
 import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 /**
- * Autonomous program made for the "Basic Autonomous" video
+ * Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
+ * Uses power/time based motor movement to achieve desired distance.
+ * Robot configuration include: tank drive motors, 1 servo for arm positioning
  *
- * Changed wait() methods to Thread.sleep()
- *
+ * with these additional features:
+ * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
  * Added a StopDrivingTime() to create a pause in the program
  */
 @Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
@@ -35,8 +37,8 @@ public class BasicAutonomous extends SynchronousOpMode
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
 
-        motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+       // motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);  //setChannelMode has been deprecated
+       // motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
