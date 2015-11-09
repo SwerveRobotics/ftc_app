@@ -9,13 +9,11 @@ import org.swerverobotics.library.interfaces.Autonomous;
 import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
 
 /**
- * Linear Autonomous program made from the "Basic Autonomous" video by SwerveRobotics
+ * Linear Autonomous program made following example "Basic Autonomous" video by SwerveRobotics
  * Uses power/time based motor movement to achieve desired distances and turns.
- * Robot configuration include: tank drive motors, 1 servo for arm positioning
+ * Robot configuration includes: tank drive motors, 1 servo for arm positioning
  *
- * with these additional features:
- * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
- * Added a StopDrivingTime() to create a pause in the program
+ * You can add your configuration and replicate desired code.
  */
 @Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
@@ -33,19 +31,24 @@ public class BasicAutonomous extends SynchronousOpMode
 
     @Override public void main() throws InterruptedException
     {
-        // Initialize motors
+        // Initialize motors to match DS configuration names
         motorLeft = hardwareMap.dcMotor.get("motorL");
         motorRight = hardwareMap.dcMotor.get("motorR");
 
-       // motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);  //setChannelMode has been deprecated
-       // motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        // ***NOTE***
+        // Method - setChannelMode - has been deprecated
+        // If you have code like this:
+        // motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        // you will need to change it to this:
+        motorRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        motorLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // Initialize servos
         armServo = hardwareMap.servo.get("servoHandL");
 
-        //  Set arm position for start
+        //  PreSet arm position for start
         LowerArm();
 
         // Wait for the game to start
