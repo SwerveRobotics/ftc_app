@@ -68,9 +68,8 @@ public class BasicAutonomous extends SynchronousOpMode
 
     }//Main
 
-// Below: Additional Methods to clean up Main code...
-// added time to both turn methods, just like for DriveForwardTime
-
+/** Below: Basic Drive Methods used in Autonomous code...**/
+    //set Drive Power variable
     double DRIVE_POWER = 1.0;
 
     public void DriveForward(double power)

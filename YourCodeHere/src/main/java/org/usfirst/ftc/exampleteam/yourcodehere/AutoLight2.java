@@ -1,10 +1,8 @@
 package org.usfirst.ftc.exampleteam.yourcodehere;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.LightReader;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
@@ -18,10 +16,10 @@ import org.swerverobotics.library.interfaces.Autonomous;
  * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
  * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyAutoLight") //name to appear in Driver Station OpMode selection
+@Autonomous(name="MyAutoLight2") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
-public class AutoLight extends SynchronousOpMode
+public class AutoLight2 extends SynchronousOpMode
 {
     /* Declare variable for all components to be used. Note initial values set to null. */
 
@@ -65,26 +63,24 @@ public class AutoLight extends SynchronousOpMode
         while (opModeIsActive()) {
             //read ods light value
             double light = distanceSensor.getLightDetectedRaw();
-            telemetry.addData("LightValue = ",light);
 
-            while (light < 100) {  //drive forward until ods RAW light reads less than 100
+            if (light > 100) {  //when white line detected ...
 
-                DriveForward(DRIVE_POWER);
-
-            }
                 StopDrivingTime(1000);
-
-                DriveForwardTime(DRIVE_POWER, 4000);
-
+                DriveForwardTime(-DRIVE_POWER, 4000);
                 StopDriving();
-
-
+            }
+            else {
+                DriveForward(DRIVE_POWER);
+            }
+             telemetry.addData("LightValue = ", light);  //not showing on DS ??
+                                                        //works on LightReader ??
         }//opModeActive
     }//Main
 
-// Below: Additional Methods to clean up Main code...
-// added time to both turn methods, just like for DriveForwardTime
-
+/** Below: Additional Methods to clean up Main code...
+ ** added time to both turn methods, just like for DriveForwardTime
+ **/
     double DRIVE_POWER = 1.0;
 
     public void DriveForward(double power)

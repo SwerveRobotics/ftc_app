@@ -65,10 +65,13 @@ public class AutoTouch extends SynchronousOpMode
             DriveForward(DRIVE_POWER);
         }
 
-        StopDrivingTime(2000);  // pause for 2 sec, then proceed with next set of code
+        StopDrivingTime(1000);  // pause for 2 sec, then proceed with next set of code
 
+        DriveForwardTime(-DRIVE_POWER,2000);
         RaiseArm();
         DriveForwardTime(DRIVE_POWER, 4000);
+        StopDriving();
+        TurnLeft(1,2000);
         StopDriving();
 
     }//Main
