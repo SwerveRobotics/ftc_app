@@ -8,7 +8,7 @@ import org.swerverobotics.library.interfaces.*;
  * to suit your needs, or create sibling OpModes adjacent to this one in the same
  * Java package.
  */
-@TeleOp(name="My First OpMode")
+//@TeleOp(name="My First OpMode")
 public class MyFirstOpMode extends SynchronousOpMode
     {
     /* Declare here any fields you might find useful. */

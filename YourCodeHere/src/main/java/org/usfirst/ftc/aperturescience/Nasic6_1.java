@@ -14,7 +14,7 @@ import org.swerverobotics.library.interfaces.TeleOp;
  *
  * @author FTC 5064 Aperture Science
  */
-@TeleOp
+//@TeleOp
 public class Nasic6_1 extends OpMode {
 
     private DcMotor motorR;
