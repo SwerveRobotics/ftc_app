@@ -14,4 +14,4 @@
  * sibling module for your code, though the former might be easier to get going.</p>
  */
 
-package org.usfirst.ftc.exampleteam.yourcodehere;
+package org.usfirst.ftc.aperturescience;

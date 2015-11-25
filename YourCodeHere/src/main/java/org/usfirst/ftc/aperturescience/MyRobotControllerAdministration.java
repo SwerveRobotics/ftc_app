@@ -1,11 +1,11 @@
-package org.usfirst.ftc.exampleteam.yourcodehere;
+package org.usfirst.ftc.aperturescience;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 
 import org.swerverobotics.library.SwerveUtil;
 import org.swerverobotics.library.interfaces.*;
 import org.swerverobotics.library.examples.*;
+
 import com.qualcomm.ftcrobotcontroller.opmodes.*;
 
 /**
@@ -53,10 +53,10 @@ public class MyRobotControllerAdministration
         // As an example, we here register some examples from the Swerve library
         // and one of the FTC HQ example opmodes. You'll probably want to change that.
 
-        manager.register(SynchTeleOp.class);
-        manager.register(SynchTelemetryOp.class);
-        manager.register(LinearAutonomousPolygon.class);
-        manager.register("FTC HQ NxtTeleOp", NxtTeleOp.class);
+        //manager.register(SynchTeleOp.class);
+        //manager.register(SynchTelemetryOp.class);
+        //manager.register(LinearAutonomousPolygon.class);
+        //manager.register("FTC HQ NxtTeleOp", NxtTeleOp.class);
         }
 
     /**
