@@ -18,7 +18,7 @@ import org.swerverobotics.library.interfaces.IFunc;
 // @Disabled
         public class DriveEncoders extends SynchronousOpMode {
     //----------------------------------------------------------------------------------------------
-    // Declare & Initialize Hardware
+    // Declare Hardware
     //----------------------------------------------------------------------------------------------
 
     // The number of encoder ticks per motor shaft revolution.
@@ -36,7 +36,9 @@ import org.swerverobotics.library.interfaces.IFunc;
 
     @Override
     protected void main() throws InterruptedException {
-        this.composeDashboard();
+        //-------------------------------------
+        // Initialize Hardware
+        //-------------------------------------
 
         this.motorLeft = this.hardwareMap.dcMotor.get("motorLeft");
         this.motorRight = this.hardwareMap.dcMotor.get("motorRight");
@@ -45,7 +47,7 @@ import org.swerverobotics.library.interfaces.IFunc;
 
         waitForStart();
 
-    //Autonomous Code below
+    //Autonomous Code goes here....
 
 
     }//Main
@@ -66,7 +68,7 @@ import org.swerverobotics.library.interfaces.IFunc;
         //Set Power
         DriveForward(power);
 
-        while (motorLeft.isBusy() && motorRight.isBusy()){
+        while (motorLeft.isBusy() && motorRight.isBusy()) {
             //wait until target is reached
         }
 
@@ -75,7 +77,7 @@ import org.swerverobotics.library.interfaces.IFunc;
         motorLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         motorRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-
+        }//DriveEncoder
 
     public void DriveForward(double power) {
         motorLeft.setPower(power);
@@ -85,4 +87,5 @@ import org.swerverobotics.library.interfaces.IFunc;
     public void StopDriving() {
         DriveForward(0);
     }
+
 }//DriveEncoder
