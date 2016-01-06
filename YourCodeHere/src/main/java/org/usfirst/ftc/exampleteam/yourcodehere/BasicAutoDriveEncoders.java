@@ -1,3 +1,4 @@
+/*
 package org.usfirst.ftc.exampleteam.yourcodehere;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,12 +8,14 @@ import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
 import org.swerverobotics.library.interfaces.IFunc;
 
+*/
 /**
  * This simple OpMode illustrates how to drive autonomously a certain distance using encoders.
  *
  * The OpMode works with both legacy and modern motor controllers. It expects two motors,
  * named "motorLeft" and "motorRight".
- */
+ *//*
+
 
         @Autonomous(name="Auto Drive (Sync)", group="Swerve Examples")
 // @Disabled
@@ -59,7 +62,9 @@ import org.swerverobotics.library.interfaces.IFunc;
                 driveWithEncoders(4.7, 1.0);
             }
 
-            /** Drive (forward) the indicated number of motor shaft revolutions using the indicated power */
+            */
+/** Drive (forward) the indicated number of motor shaft revolutions using the indicated power *//*
+
             void driveWithEncoders(double revolutions, double power) throws InterruptedException
             {
                 // How far are we to move, in ticks instead of revolutions?
@@ -156,7 +161,9 @@ import org.swerverobotics.library.interfaces.IFunc;
         driveWithEncoders(4.7, 1.0);
         }
 
-    /** Drive (forward) the indicated number of motor shaft revolutions using the indicated power */
+    */
+/** Drive (forward) the indicated number of motor shaft revolutions using the indicated power *//*
+
     void driveWithEncoders(double revolutions, double power) throws InterruptedException
         {
         // How far are we to move, in ticks instead of revolutions?
@@ -220,3 +227,4 @@ import org.swerverobotics.library.interfaces.IFunc;
             }
         }
     }
+*/

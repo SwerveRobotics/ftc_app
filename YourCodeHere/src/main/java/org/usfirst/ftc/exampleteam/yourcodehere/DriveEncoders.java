@@ -7,6 +7,7 @@ import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
 import org.swerverobotics.library.interfaces.IFunc;
 
+
 /**
  * This simple OpMode illustrates how to drive autonomously a certain distance using encoders.
  *
@@ -65,7 +66,7 @@ import org.swerverobotics.library.interfaces.IFunc;
         // waits for encoders to read zero
         while(motorLeft.getCurrentPosition() != 0 ||
                 motorRight.getCurrentPosition() != 0) {
-            waitOneFullHardwareCycle();
+            //empty loop to wait until zero is reached
         }
 
         //calculate encoder clicks
