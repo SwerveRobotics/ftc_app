@@ -2,7 +2,7 @@ package org.usfirst.ftc.exampleteam.yourcodehere;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.swerverobotics.library.SynchronousOpMode;
 import org.swerverobotics.library.interfaces.Autonomous;
 import org.swerverobotics.library.interfaces.IFunc;
@@ -28,7 +28,9 @@ import org.swerverobotics.library.interfaces.IFunc;
 
     DcMotor motorRight;
     DcMotor motorLeft;
-
+    //constant calculations: determine the Counts
+    int encRotations = 1120;
+    int constant = 1234;
 
     //----------------------------------------------------------------------------------------------
     // Main loop
@@ -48,7 +50,7 @@ import org.swerverobotics.library.interfaces.IFunc;
         waitForStart();
 
     //Autonomous Code goes here....
-
+        DriveEncoderDistance(0.5,10);
 
     }//Main
 
@@ -56,14 +58,22 @@ import org.swerverobotics.library.interfaces.IFunc;
     // Utility - SubMethods
     //----------------------------------------------------------------------------------------------
 
-    public void DriveEncoderDistance(double power, int distance){
+    public void DriveEncoderDistance(double power, int distance) throws InterruptedException{
         //reset encoders
         motorLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         motorRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        // waits for encoders to read zero
+        while(motorLeft.getCurrentPosition() != 0 ||
+                motorRight.getCurrentPosition() != 0) {
+            waitOneFullHardwareCycle();
+        }
+
+        //calculate encoder clicks
+        int COUNTS = distance * constant;
 
         //Set Target
-        motorLeft.setTargetPosition(distance);
-        motorRight.setTargetPosition(distance);
+        motorLeft.setTargetPosition(COUNTS);
+        motorRight.setTargetPosition(COUNTS);
 
         //Set Power
         DriveForward(power);
@@ -74,10 +84,11 @@ import org.swerverobotics.library.interfaces.IFunc;
 
         //Stop and return mode to normal
         StopDriving();
+
         motorLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         motorRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        }//DriveEncoder
+    }//DriveEncoder
 
     public void DriveForward(double power) {
         motorLeft.setPower(power);
