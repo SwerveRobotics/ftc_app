@@ -79,6 +79,10 @@ import org.swerverobotics.library.interfaces.IFunc;
         //Set Power
         DriveForward(power);
 
+        // Set them a-going
+        this.motorLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+
         while (motorLeft.isBusy() && motorRight.isBusy()) {
             //wait until target is reached
         }
