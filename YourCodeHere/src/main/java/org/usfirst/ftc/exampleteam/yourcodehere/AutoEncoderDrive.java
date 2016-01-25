@@ -101,9 +101,10 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         while(motorLeft.getCurrentPosition() != 0 ||
                 motorRight.getCurrentPosition() != 0) {
             //empty loop to wait until zero is reached
+            telemetry.addData("L EncValue: ",motorLeft.getCurrentPosition());
+            telemetry.addData("R EncValue: ",motorRight.getCurrentPosition());
         }
-        telemetry.addData("L EncValue: ",motorLeft.getCurrentPosition());
-        telemetry.addData("R EncValue: ",motorRight.getCurrentPosition());
+
 
         //calculate encoder clicks
         int COUNTS = distance * constant;
@@ -144,6 +145,8 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         // waits for encoders to read zero
         while(motorLeft.getCurrentPosition() != 0 ||
                 motorRight.getCurrentPosition() != 0) {
+            telemetry.addData("L EncValue: ",motorLeft.getCurrentPosition());
+            telemetry.addData("R EncValue: ",motorRight.getCurrentPosition());
             //empty loop to wait until zero is reached
         }
 
@@ -183,6 +186,8 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         // waits for encoders to read zero
         while(motorLeft.getCurrentPosition() != 0 ||
                 motorRight.getCurrentPosition() != 0) {
+            telemetry.addData("L EncValue: ",motorLeft.getCurrentPosition());
+            telemetry.addData("R EncValue: ",motorRight.getCurrentPosition());
             //empty loop to wait until zero is reached
         }
 
@@ -212,6 +217,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
 
     }//LeftEncoderTurn
 
+    //set up lines to display to DS when telemetry.update(); is called
     void composeDashboard()
     {
         telemetry.addLine(
