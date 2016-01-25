@@ -34,7 +34,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
     DcMotor motorLeft;
 
 
-    int constant = 1120;    /** This value is initially set to clicks for on rotation. and the desired distance of 1 inch
+    int constant = 1120;    /** This value is initially set to clicks for one rotation. and the desired distance of 1 inch
                             *   to determine encoder constant divide encRotations by the distance travelled in one full rotation
                             *   this will provide the encoder counts equal to 1 inch of travel.
                             */
@@ -49,7 +49,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         //-------------------------------------
         // Initialize Hardware
         //-------------------------------------
-
+        this.composeDashboard(); //set up telemetry to display on DS
         this.motorLeft = this.hardwareMap.dcMotor.get("motorLeft");
         this.motorRight = this.hardwareMap.dcMotor.get("motorRight");
 
@@ -69,13 +69,29 @@ public class AutoEncoderDrive extends SynchronousOpMode {
 
         StopDriving();
         //------------------------------------------------------------------------------------------
-
+        //End of Autonomous Code
 
     }//Main
 
     //----------------------------------------------------------------------------------------------
     // Utility - SubMethods
     //----------------------------------------------------------------------------------------------
+
+    // The basic Drive & Turn Methods
+    public void DriveForward(double power) {
+        motorLeft.setPower(power);
+        motorRight.setPower(power);
+    }
+    public void DriveRight(double power) {
+        motorLeft.setPower(-power);
+        motorRight.setPower(power);
+    }
+    public void DriveLeft(double power) {
+        DriveRight(-power);
+    }
+    public void StopDriving() {
+        DriveForward(0);
+    }
 
     public void DriveEncoderDistance(double power, int distance) throws InterruptedException{
         //reset encoders
@@ -106,8 +122,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
-            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
-            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
+            telemetry.update();
             //Empty loop to wait until target is reached
         }
 
@@ -119,21 +134,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
 
     }//DriveEncoderDistance
 
-    // The basic Drive & Turn Methods
-    public void DriveForward(double power) {
-        motorLeft.setPower(power);
-        motorRight.setPower(power);
-    }
-    public void DriveRight(double power) {
-        motorLeft.setPower(-power);
-        motorRight.setPower(power);
-    }
-    public void DriveLeft(double power) {
-        DriveRight(-power);
-    }
-    public void StopDriving() {
-        DriveForward(0);
-    }
+
     //----------------------------------------------------------------------------------------------
 
     public void RightEncoderTurn(double power, int distance) throws InterruptedException{
@@ -162,8 +163,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
-            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
-            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
+            telemetry.update();
             //Empty loop to wait until target is reached
         }
         //Stop and return mode to normal
@@ -201,8 +201,7 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
-            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
-            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
+            telemetry.update();
             //Empty loop to wait until target is reached
         }
 
@@ -212,6 +211,21 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         motorRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
     }//LeftEncoderTurn
+
+    void composeDashboard()
+    {
+        telemetry.addLine(
+                telemetry.item("left: ", new IFunc<Object>() { public Object value() { return motorLeft.getCurrentPosition(); }}),
+                telemetry.item("target: ",   new IFunc<Object>() { public Object value() { return motorLeft.getTargetPosition(); }})
+
+        );
+
+        telemetry.addLine(
+                telemetry.item("right: ", new IFunc<Object>() { public Object value() { return motorRight.getCurrentPosition(); }}),
+                telemetry.item("target: ",    new IFunc<Object>() { public Object value() { return motorRight.getTargetPosition(); }})
+
+        );
+    }//composeDashboard
 
 }//AutoEncoderDrive
 
