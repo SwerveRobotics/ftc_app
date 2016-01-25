@@ -17,7 +17,7 @@ import org.swerverobotics.library.interfaces.IFunc;
  *
  */
 
-@Autonomous(name="AutoEncoderDrive")
+@Autonomous(name="AutoEncoderDrive") // change this name to match your autonomous programming within
 // @Disabled
 public class AutoEncoderDrive extends SynchronousOpMode {
     //----------------------------------------------------------------------------------------------
@@ -86,9 +86,13 @@ public class AutoEncoderDrive extends SynchronousOpMode {
                 motorRight.getCurrentPosition() != 0) {
             //empty loop to wait until zero is reached
         }
+        telemetry.addData("L EncValue: ",motorLeft.getCurrentPosition());
+        telemetry.addData("R EncValue: ",motorRight.getCurrentPosition());
 
         //calculate encoder clicks
         int COUNTS = distance * constant;
+        telemetry.addData("Counts: ", COUNTS);
+
 
         //Set Target
         motorLeft.setTargetPosition(COUNTS);
@@ -102,6 +106,8 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
+            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
+            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
             //Empty loop to wait until target is reached
         }
 
@@ -156,6 +162,8 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
+            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
+            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
             //Empty loop to wait until target is reached
         }
         //Stop and return mode to normal
@@ -193,6 +201,8 @@ public class AutoEncoderDrive extends SynchronousOpMode {
         this.motorRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         while (motorLeft.isBusy() && motorRight.isBusy()) {
+            telemetry.addData("L-COUNTS: ", motorLeft.getCurrentPosition()); //Displays CurrentPosition
+            telemetry.addData("R-COUNTS: ", motorRight.getCurrentPosition());
             //Empty loop to wait until target is reached
         }
 
