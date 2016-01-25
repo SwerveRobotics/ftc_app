@@ -35,7 +35,7 @@ import org.swerverobotics.library.interfaces.IFunc;
     int encRotations = 1120;
     int constant = 1234;    /** to determine encoder constant divide encRotations by the distance travelled in one full rotation
                             *   this will provide the encoder counts equal to 1 inch of travel.
- *                          */
+                            */
 
     //----------------------------------------------------------------------------------------------
     // Main loop
@@ -62,7 +62,7 @@ import org.swerverobotics.library.interfaces.IFunc;
     //----------------------------------------------------------------------------------------------
     // Utility - SubMethods
     //----------------------------------------------------------------------------------------------
-    
+
 
     public void DriveEncoderDistance(double power, int distance) throws InterruptedException{    //method to drive set power and distance using encoders
 
