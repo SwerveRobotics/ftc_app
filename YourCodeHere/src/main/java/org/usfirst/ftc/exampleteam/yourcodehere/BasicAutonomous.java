@@ -15,8 +15,7 @@ import org.swerverobotics.library.internal.ThreadSafeAnalogInput;
  *
  * You can add your configuration and replicate desired code.
  */
-@Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
-//@Disabled  //if you un-comment this, it will keep from showing on DriverStation
+//@Autonomous(name="MyBasicAuto") //name to appear in Driver Station OpMode selection
 
 public class BasicAutonomous extends SynchronousOpMode
 {

@@ -18,7 +18,7 @@ import org.swerverobotics.library.interfaces.Autonomous;
  * Changed wait() methods to Thread.sleep() Note: the wait() method originally shown in video did not function
  * Added a StopDrivingTime() to create a pause in the program
  */
-@Autonomous(name="MyAutoLight") //name to appear in Driver Station OpMode selection
+//@Autonomous(name="MyAutoLight") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment this, it will keep from showing on DriverStation
 
 public class AutoLight extends SynchronousOpMode

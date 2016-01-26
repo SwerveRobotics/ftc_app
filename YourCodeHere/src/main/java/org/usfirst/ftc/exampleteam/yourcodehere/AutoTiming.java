@@ -17,7 +17,7 @@ import org.swerverobotics.library.interfaces.Autonomous;
  * respectively, which works with both legacy and modern motor
  * controllers.
  */
-@Autonomous(name="AutoTiming") //name to appear in Driver Station OpMode selection
+//@Autonomous(name="AutoTiming") //name to appear in Driver Station OpMode selection
 //@Disabled  //if you un-comment @Disable, it will keep from showing on DriverStation
 
 public class AutoTiming extends LinearOpMode {
