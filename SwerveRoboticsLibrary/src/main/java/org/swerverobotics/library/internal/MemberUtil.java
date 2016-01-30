@@ -1,7 +1,8 @@
 package org.swerverobotics.library.internal;
 
 import com.qualcomm.ftccommon.*;
-import com.qualcomm.hardware.*;
+import com.qualcomm.hardware.modernrobotics.*;
+import com.qualcomm.hardware.hitechnic.*;
 import com.qualcomm.modernrobotics.*;
 import com.qualcomm.robotcore.eventloop.*;
 import com.qualcomm.robotcore.hardware.*;
@@ -21,11 +22,11 @@ public class MemberUtil
 
     public static ReadWriteRunnableUsbHandler getHandlerOfReadWriteRunnableStandard(ReadWriteRunnableStandard readWriteRunnableStandard)
         {
-        return Util.<ReadWriteRunnableUsbHandler>getPrivateObjectField(readWriteRunnableStandard, 13);
+        return Util.<ReadWriteRunnableUsbHandler>getPrivateObjectField(readWriteRunnableStandard, 14);
         }
     public static void setHandlerOfReadWriteRunnableStandard(ReadWriteRunnableStandard readWriteRunnableStandard, ReadWriteRunnableUsbHandler handler)
         {
-        Util.setPrivateObjectField(readWriteRunnableStandard, 13, handler);
+        Util.setPrivateObjectField(readWriteRunnableStandard, 14, handler);
         }
 
     public static void setRunningReadWriteRunnableStandard(ReadWriteRunnableStandard readWriteRunnableStandard, boolean isRunning)
@@ -46,12 +47,12 @@ public class MemberUtil
     // ModernRoboticsUsbDevice
     //----------------------------------------------------------------------------------------------
 
-    public static ReadWriteRunnableStandard getReadWriteRunnableModernRoboticsUsbDevice(ModernRoboticsUsbDevice device)
+    public static ReadWriteRunnable getReadWriteRunnableModernRoboticsUsbDevice(ModernRoboticsUsbDevice device)
     // Here we rely on the fact that ReadWriteRunnableBlocking inherits from ReadWriteRunnableStandard
         {
         return Util.<ReadWriteRunnableStandard>getPrivateObjectField(device, 0);
         }
-    public static void setReadWriteRunnableModernRoboticsUsbDevice(ModernRoboticsUsbDevice device, ReadWriteRunnableStandard readWriteRunnableStandard)
+    public static void setReadWriteRunnableModernRoboticsUsbDevice(ModernRoboticsUsbDevice device, ReadWriteRunnable readWriteRunnableStandard)
         {
         Util.setPrivateObjectField(device, 0, readWriteRunnableStandard);
         }
@@ -94,46 +95,27 @@ public class MemberUtil
         }
 
     //----------------------------------------------------------------------------------------------
-    // EventLoopManager
-    //----------------------------------------------------------------------------------------------
-
-    public static RobocolDatagramSocket socketOfEventLoopManager(EventLoopManager manager)
-        {
-        return Util.<RobocolDatagramSocket>getPrivateObjectField(manager, 2);
-        }
-
-    public static void setSocketOfEventLoopManager(EventLoopManager manager, RobocolDatagramSocket socket)
-        {
-        Util.setPrivateObjectField(manager, 2, socket);
-        }
-
-    public static EventLoopManager.EventLoopMonitor monitorOfEventLoopManager(EventLoopManager manager)
-        {
-        return Util.<EventLoopManager.EventLoopMonitor>getPrivateObjectField(manager, 8);
-        }
-
-    //----------------------------------------------------------------------------------------------
     // Legacy Motor Controller
     //----------------------------------------------------------------------------------------------
 
     public static boolean isLegacyMotorController(DcMotorController controller)
         {
-        return controller instanceof com.qualcomm.hardware.HiTechnicNxtDcMotorController;
+        return controller instanceof HiTechnicNxtDcMotorController;
         }
 
     public static boolean isLegacyServoController(ServoController controller)
         {
-        return controller instanceof com.qualcomm.hardware.HiTechnicNxtServoController;
+        return controller instanceof HiTechnicNxtServoController;
         }
 
     public static boolean isModernMotorController(DcMotorController controller)
         {
-        return controller instanceof com.qualcomm.hardware.ModernRoboticsUsbDcMotorController;
+        return controller instanceof ModernRoboticsUsbDcMotorController;
         }
 
     public static boolean isModernServoController(ServoController controller)
         {
-        return controller instanceof com.qualcomm.hardware.ModernRoboticsUsbServoController;
+        return controller instanceof ModernRoboticsUsbServoController;
         }
 
     public static LegacyModule legacyModuleOfLegacyMotorController(DcMotorController controller)
@@ -206,7 +188,7 @@ public class MemberUtil
         }
     static DeviceInterfaceModule deviceModuleOfModernColorSensor(ColorSensor sensor)
         {
-        return Util.<DeviceInterfaceModule>getPrivateObjectField(sensor, 0);
+        return Util.<DeviceInterfaceModule>getPrivateObjectField(sensor, 1);    // 0 is now i2c address
         }
     static int portOfHiTechnicColorSensor(ColorSensor sensor)
         {
@@ -214,38 +196,40 @@ public class MemberUtil
         }
     static int portOfModernColorSensor(ColorSensor sensor)
         {
-        return Util.getPrivateIntField(sensor, 7);
+        return Util.getPrivateIntField(sensor, 8);
         }
 
     //----------------------------------------------------------------------------------------------
     // Legacy Module
     //----------------------------------------------------------------------------------------------
 
-    static I2cController.I2cPortReadyCallback[] callbacksOfLegacyModule(LegacyModule module)
+    static I2cController.I2cPortReadyCallback[] callbacksOfLegacyModule(LegacyModule imodule)
         {
+        ModernRoboticsUsbLegacyModule module = (ModernRoboticsUsbLegacyModule)imodule;
         return Util.<I2cController.I2cPortReadyCallback[]>getPrivateObjectField(module, 4);
         }
 
-    //----------------------------------------------------------------------------------------------
-    // Device Interface Module
-    //----------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------
+        // Device Interface Module
+        //----------------------------------------------------------------------------------------------
 
-    static I2cController.I2cPortReadyCallback[] callbacksOfDeviceInterfaceModule(DeviceInterfaceModule module)
+    static I2cController.I2cPortReadyCallback[] callbacksOfDeviceInterfaceModule(DeviceInterfaceModule imodule)
         {
-        return Util.<I2cController.I2cPortReadyCallback[]>getPrivateObjectField(module, 0);
-        }
-
-    public static I2cController i2cControllerOfI2cDevice(I2cDevice i2cDevice)
-        {
-        return Util.<I2cController>getPrivateObjectField(i2cDevice, 0);
+        ModernRoboticsUsbDeviceInterfaceModule module = (ModernRoboticsUsbDeviceInterfaceModule)imodule;
+        return Util.<I2cController.I2cPortReadyCallback[]>getPrivateObjectField(module, 3);
         }
 
     //----------------------------------------------------------------------------------------------
     // I2cDevice
     //----------------------------------------------------------------------------------------------
 
+    public static I2cController i2cControllerOfI2cDevice(I2cDevice i2cDevice)
+        {
+            return Util.<I2cController>getPrivateObjectField(i2cDevice, 0);
+        }
+
     public static int portOfI2cDevice(I2cDevice i2cDevice)
         {
-        return Util.getPrivateIntField(i2cDevice, 1);
+            return Util.getPrivateIntField(i2cDevice, 1);
         }
     }
