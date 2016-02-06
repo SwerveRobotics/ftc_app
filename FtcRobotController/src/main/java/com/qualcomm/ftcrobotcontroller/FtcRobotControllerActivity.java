@@ -38,6 +38,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -82,9 +83,12 @@ import static junit.framework.Assert.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.swerverobotics.library.*;
 import org.swerverobotics.library.internal.*;
@@ -111,6 +115,7 @@ public class FtcRobotControllerActivity extends Activity {
   protected TextView textWifiDirectPassphrase;
   protected TextView[] textGamepad = new TextView[NUM_GAMEPADS];
   protected TextView textOpMode;
+  protected TextView textBuildDate;
   protected TextView textErrorMessage;
   protected ImmersiveMode immersion;
 
@@ -203,6 +208,7 @@ public class FtcRobotControllerActivity extends Activity {
     textWifiDirectStatus = (TextView) findViewById(R.id.textWifiDirectStatus);
     textRobotStatus = (TextView) findViewById(R.id.textRobotStatus);
     textOpMode = (TextView) findViewById(R.id.textOpMode);
+    textBuildDate = (TextView) findViewById(R.id.textBuildDate);
     textErrorMessage = (TextView) findViewById(R.id.textErrorMessage);
     textWifiDirectPassphrase = (TextView) findViewById(R.id.textWifiDirectPassphrase);
     textGamepad[0] = (TextView) findViewById(R.id.textGamepad1);
@@ -227,6 +233,16 @@ public class FtcRobotControllerActivity extends Activity {
     hittingMenuButtonBrightensScreen();
 
     if (USE_DEVICE_EMULATION) { HardwareFactory.enableDeviceEmulation(); }
+
+    try {
+      ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), 0);
+      ZipFile zf = new ZipFile(ai.sourceDir);
+      ZipEntry ze = zf.getEntry("classes.dex");
+      long time = ze.getTime();
+      String buildDate = SimpleDateFormat.getInstance().format(new java.util.Date(time));
+      zf.close();
+      textBuildDate.setText("App updated on " + buildDate);
+    } catch(Exception e) {}
   }
 
   @Override
