@@ -131,10 +131,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:text="" />
 
     <TextView
-      android:id="@+id/textErrorMessage"
+      android:id="@+id/textBuildDate"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/textOpMode"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:text="" />
+
+    <TextView
+      android:id="@+id/textErrorMessage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/textBuildDate"
       android:textColor="#990000"
       android:textStyle="bold"
       android:minLines="2"
